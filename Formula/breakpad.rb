@@ -63,7 +63,7 @@ EOS
 
     system ENV.cc, "-ObjC", "-g", "test.m", "-o", "test",
                    "-framework", "Foundation",
-                   "-framework", "Breakpad", "-F", lib
-    system "./test"
+                   "-framework", "Breakpad", "-F", "#{HOMEBREW_PREFIX}/Frameworks"
+    system "FRAMEWORK_SEARCH_PATH=#{HOMEBREW_PREFIX}/Frameworks", "./test"
   end
 end
