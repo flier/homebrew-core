@@ -1,14 +1,10 @@
 class Breakpad < Formula
   desc "Components implement a crash-reporting system."
   homepage "https://chromium.googlesource.com/breakpad/breakpad/"
-
-  url "https://chromium.googlesource.com/breakpad/breakpad",
-      :using => :git,
+  url "https://chromium.googlesource.com/breakpad/breakpad.git",
       :revision => "67d5567177301d0c24303f26ad119ab7bd7fab40"
-  version "0.1.0"
-
-  head "https://chromium.googlesource.com/breakpad/breakpad",
-      :using => :git
+  version "1.0.0"
+  head "https://chromium.googlesource.com/breakpad/breakpad.git"
 
   depends_on :xcode => :build
 
@@ -63,7 +59,7 @@ EOS
 
     system ENV.cc, "-ObjC", "-g", "test.m", "-o", "test",
                    "-framework", "Foundation",
-                   "-framework", "Breakpad", "-F", "#{HOMEBREW_PREFIX}/Frameworks"
-    system "FRAMEWORK_SEARCH_PATH=#{HOMEBREW_PREFIX}/Frameworks", "./test"
+                   "-framework", "Breakpad", "-F", frameworks
+    system "./test"
   end
 end
