@@ -39,23 +39,23 @@ class Breakpad < Formula
 
   test do
     (testpath/"test.m").write <<-EOS.undent
-#import <Foundation/Foundation.h>
-#import <Breakpad/Breakpad.h>
+      #import <Foundation/Foundation.h>
+      #import <Breakpad/Breakpad.h>
 
-int main() {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+      int main() {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-  NSDictionary *plist = [[NSBundle mainBundle] infoDictionary];
+        NSDictionary *plist = [[NSBundle mainBundle] infoDictionary];
 
-  BreakpadRef breakpad = BreakpadCreate(plist);
+        BreakpadRef breakpad = BreakpadCreate(plist);
 
-  BreakpadRelease(breakpad);
+        BreakpadRelease(breakpad);
 
-  [pool release];
+        [pool release];
 
-  return 0;
-}
-EOS
+        return 0;
+      }
+      EOS
 
     system ENV.cc, "-ObjC", "-g", "test.m", "-o", "test",
                    "-framework", "Foundation",
