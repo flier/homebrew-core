@@ -1,24 +1,15 @@
 class Ffmpeg < Formula
   desc "Play, record, convert, and stream audio and video"
   homepage "https://ffmpeg.org/"
+  url "https://ffmpeg.org/releases/ffmpeg-3.1.1.tar.bz2"
+  sha256 "a5bca50a90a37b983eaa17c483a387189175f37ca678ae7e51d43e7610b4b3b4"
   head "https://github.com/FFmpeg/FFmpeg.git"
 
-  stable do
-    url "https://ffmpeg.org/releases/ffmpeg-3.1.tar.bz2"
-    sha256 "2100fca81627e6cbe937fd6a071ae89277c02350538944b2b0c3c2cc71d9402a"
-
-    # See https://github.com/Homebrew/homebrew-core/pull/2416 and
-    # https://trac.ffmpeg.org/ticket/5670
-    patch do
-      url "https://git.videolan.org/?p=ffmpeg.git;a=patch;h=c5566f0a944e376b39c8f994659060ca036c441d"
-      sha256 "408d11d8ae496ed4f83e36e1da0db4b373e8c016cb3723e029ba2fd25b1e7611"
-    end
-  end
-
   bottle do
-    sha256 "493ba317ca0980ccf28b9e6b202c6f3fa7553334a82776944b61247706f3f272" => :el_capitan
-    sha256 "3dce04d1f5bd871143d90f6a9c5b14003978552854f5119253ead306701f9995" => :yosemite
-    sha256 "ab035d1c4a3f0e486eaeb3a5b5b1628fb3eea2a04ab8b7dc12142e9590a2652a" => :mavericks
+    revision 1
+    sha256 "d9c62b83a65367759a8885acab27553e104fad73d3b16c4e763f43cb9a2bb65b" => :el_capitan
+    sha256 "242c3f30bb3992784c373c163f41168ead5630e8a370aa97d24ddca13ed134a7" => :yosemite
+    sha256 "b0c090350f3628ee5c70c16fecddeea19332a89a4a047787333ac23b1788fa16" => :mavericks
   end
 
   option "without-x264", "Disable H.264 encoder"
@@ -42,11 +33,11 @@ class Ffmpeg < Formula
   option "with-webp", "Enable using libwebp to encode WEBP images"
   option "with-zeromq", "Enable using libzeromq to receive commands sent through a libzeromq client"
   option "with-snappy", "Enable Snappy library"
-  option "with-dcadec", "Enable dcadec library"
   option "with-rubberband", "Enable rubberband library"
   option "with-zimg", "Enable z.lib zimg library"
   option "with-openh264", "Enable OpenH264 library"
   option "with-xz", "Enable decoding of LZMA-compressed TIFF files"
+  option "with-libebur128", "Enable using libebur128 for EBU R128 loudness measurement"
 
   depends_on "pkg-config" => :build
 
@@ -85,11 +76,19 @@ class Ffmpeg < Formula
   depends_on "webp" => :optional
   depends_on "zeromq" => :optional
   depends_on "libbs2b" => :optional
-  depends_on "dcadec" => :optional
   depends_on "rubberband" => :optional
   depends_on "zimg" => :optional
-  depends_on "openh264" => :optional
   depends_on "xz" => :optional
+  depends_on "libebur128" => :optional
+
+  depends_on "nasm" => :build if build.with? "openh264"
+
+  # Remove when ffmpeg has support for openh264 1.6.0
+  # See https://github.com/cisco/openh264/issues/2505
+  resource "openh264-1.5.0" do
+    url "https://github.com/cisco/openh264/archive/v1.5.0.tar.gz"
+    sha256 "98077bd5d113c183ce02b678733b0cada2cf36750370579534c4d70f0b6c27b5"
+  end
 
   def install
     args = %W[
@@ -104,6 +103,15 @@ class Ffmpeg < Formula
       --host-cflags=#{ENV.cflags}
       --host-ldflags=#{ENV.ldflags}
     ]
+
+    if build.with? "openh264"
+      resource("openh264-1.5.0").stage do
+        system "make", "install-shared", "PREFIX=#{libexec}/openh264-1.5.0"
+        chmod 0444, libexec/"openh264-1.5.0/lib/libopenh264.dylib"
+      end
+      ENV.prepend_path "PKG_CONFIG_PATH", libexec/"openh264-1.5.0/lib/pkgconfig"
+      args << "--enable-libopenh264"
+    end
 
     args << "--enable-opencl" if MacOS.version > :lion
 
@@ -136,11 +144,10 @@ class Ffmpeg < Formula
     args << "--enable-libwebp" if build.with? "webp"
     args << "--enable-libzmq" if build.with? "zeromq"
     args << "--enable-libbs2b" if build.with? "libbs2b"
-    args << "--enable-libdcadec" if build.with? "dcadec"
     args << "--enable-librubberband" if build.with? "rubberband"
     args << "--enable-libzimg" if build.with? "zimg"
     args << "--disable-indev=qtkit" if build.without? "qtkit"
-    args << "--enable-libopenh264" if build.with? "openh264"
+    args << "--enable-libebur128" if build.with? "libebur128"
 
     if build.with? "xz"
       args << "--enable-lzma"

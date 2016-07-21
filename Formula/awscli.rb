@@ -2,14 +2,14 @@
 class Awscli < Formula
   desc "Official Amazon AWS command-line interface"
   homepage "https://aws.amazon.com/cli/"
-  url "https://files.pythonhosted.org/packages/e1/99/1bf0dc775cb73abc44bde28dfee3bfb00915a13b43de8fc6a0f43c2f3394/awscli-1.10.43.tar.gz"
-  sha256 "d1af5b183cfad5d38501785e671c4a5246cbb26774c37fc045a3b65c4345b9b2"
+  url "https://files.pythonhosted.org/packages/e4/9c/89c4b5e7767e7c2b8d92c36a455d97bb4226d9434e7d5d4d0110ba27afff/awscli-1.10.48.tar.gz"
+  sha256 "6864a04e5665ed868376f54598d5373b7a2d6d325b61f166b83d9f3ab7018f3b"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "d8beaad767b92c24762b25d5657027d3440c6d9e18f05734c1f6f755780eb8f2" => :el_capitan
-    sha256 "e72972ad0087c161e6aa7d9b37e48fe371106869048f6c6d2662659f3f1c60c9" => :yosemite
-    sha256 "1144768d6df345cd601495373ca7a8c12703fedc9dfba16c38ec5f58db354e2b" => :mavericks
+    sha256 "4113d1b3fc0e0ba60968ff98f67205fb653aad3ef265c36bedb139dbf0c152b3" => :el_capitan
+    sha256 "cc40f7957266577cf438f903142b572bc17fe434baaf65e655a99b804be7111e" => :yosemite
+    sha256 "2c175454cde1995d0478a7a9df238f4284f00efd03b8657c777f00c5301b484e" => :mavericks
   end
 
   head do
@@ -33,13 +33,13 @@ class Awscli < Formula
   depends_on :python if MacOS.version <= :lion
 
   resource "botocore" do
-    url "https://files.pythonhosted.org/packages/d1/55/da40f32b95d9e5046171d18f88c298c6e52c6e74cbf56958899cd0841397/botocore-1.4.33.tar.gz"
-    sha256 "ffbd81c1a6820749dbf16e1ef6c6ec76aa59d9a8b5c33b17648e6bc8bc02920d"
+    url "https://files.pythonhosted.org/packages/a5/4e/34b166e656b2501dd8bff03d3a15e55b13ca6accc1b0431a915ac6807c92/botocore-1.4.38.tar.gz"
+    sha256 "02f7ced1fd2b9e675cd55f08b4616dd0bc3e1f720dadede0cca88877d230b7e9"
   end
 
   resource "colorama" do
-    url "https://files.pythonhosted.org/packages/24/84/29ce4167d1f5c4a320aaad91e1178e5a1baf9cfe1c63f9077c5dade0e3cc/colorama-0.3.3.tar.gz"
-    sha256 "eb21f2ba718fbf357afdfdf6f641ab393901c7ca8d9f37edd0bee4806ffa269c"
+    url "https://files.pythonhosted.org/packages/f0/d0/21c6449df0ca9da74859edc40208b3a57df9aca7323118c913e58d442030/colorama-0.3.7.tar.gz"
+    sha256 "e043c8d32527607223652021ff648fbb394d5e19cba9f1a698670b338c9d782b"
   end
 
   resource "docutils" do

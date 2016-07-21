@@ -28,28 +28,14 @@ class Tor < Formula
     sha256 "64564813dde75909e57a7a3790694022168104a9c29423822f503c54347c1fa1" => :mavericks
   end
 
-  stable do
-    # autotools only needed as long as the patch below is applied;
-    # remove them when the patch goes away
-    depends_on "autoconf" => :build
-    depends_on "automake" => :build
-
-    # Fixes build on 10.12
-    # https://trac.torproject.org/projects/tor/ticket/17819
-    # Applied upstream, will be in the next release.
-    patch do
-      url "https://trac.torproject.org/projects/tor/raw-attachment/ticket/17819/pthread.diff"
-      sha256 "9eb64548f0c1efae28535dcfa4ed19824eccaea1cee62607adb480b99217697b"
-    end
-  end
-
   devel do
-    url "https://dist.torproject.org/tor-0.2.8.4-rc.tar.gz"
-    mirror "https://tor.eff.org/dist/tor-0.2.8.4-rc.tar.gz"
-    version "0.2.8.4-rc"
-    sha256 "3070015123094bf576641a34aaf4cec17f548f0108447031445d42cae164f6ba"
+    url "https://dist.torproject.org/tor-0.2.8.5-rc.tar.gz"
+    mirror "https://tor.eff.org/dist/tor-0.2.8.5-rc.tar.gz"
+    version "0.2.8.5-rc"
+    sha256 "715c15230f1160c170c61286b02620a1d99a8476dd9c4f80a2e66779be63780a"
   end
 
+  depends_on "pkg-config" => :build
   depends_on "libevent"
   depends_on "openssl"
   depends_on "libscrypt" => :optional
@@ -81,13 +67,6 @@ class Tor < Formula
 
   plist_options :manual => "tor start"
 
-  test do
-    pipe_output("script -q /dev/null #{bin}/tor-gencert --create-identity-key", "passwd\npasswd\n")
-    assert (testpath/"authority_certificate").exist?
-    assert (testpath/"authority_signing_key").exist?
-    assert (testpath/"authority_identity_key").exist?
-  end
-
   def plist; <<-EOS.undent
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -112,5 +91,12 @@ class Tor < Formula
       </dict>
     </plist>
     EOS
+  end
+
+  test do
+    pipe_output("script -q /dev/null #{bin}/tor-gencert --create-identity-key", "passwd\npasswd\n")
+    assert (testpath/"authority_certificate").exist?
+    assert (testpath/"authority_signing_key").exist?
+    assert (testpath/"authority_identity_key").exist?
   end
 end

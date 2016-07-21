@@ -1,14 +1,14 @@
 class Conan < Formula
   desc "Distributed, open source, package manager for C/C++"
   homepage "https://github.com/conan-io/conan"
-  url "https://pypi.python.org/packages/27/47/9098ac3ad4416c5a2ecb6bfbd45dd65e59c01a1f1281493c737a95245ce2/conan-0.9.4.tar.gz"
-  sha256 "deb686194e77e4c12b8b56caf6da9abf6bc510987cb2b06c939c145aaffa4c87"
+  url "https://pypi.python.org/packages/8d/2b/081292f087e5a381a22a6d3171e32e7fb3836fda5dd81de642b4c7bf7ddf/conan-0.10.1.tar.gz"
+  sha256 "65c2e9217fb5032d80f9e748b4d61f15bb67b25cae333902816add13afd97192"
 
   bottle do
     cellar :any
-    sha256 "ef1fa603e0b2baa1caa5a4ef1a322ec492bbb062421f1f0040cf400c56045183" => :el_capitan
-    sha256 "37387b1e536593b24196f3b30c1af3645d73b606539fffd53df7eb344a29fcbb" => :yosemite
-    sha256 "860b92415e7326a9b7fe8083d844fb147d0ec766b3753e917dae17085d9f2fa5" => :mavericks
+    sha256 "e6c9df5f8a12bb1f3d9acfe690936af70698c03f82c92c14ec97f432da4553e9" => :el_capitan
+    sha256 "cc957a7cf0cc3f301797dd88620398798d163fa96d4707bd3e480ed76889b34d" => :yosemite
+    sha256 "95edc5115f155a8e50cf10338557c1eb9d7ccfe62aaaeb8da131b7455adc792f" => :mavericks
   end
 
   depends_on "python" if MacOS.version <= :snow_leopard

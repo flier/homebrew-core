@@ -15,11 +15,13 @@ class Gd < Formula
     end
   end
 
+  revision 2
+
   bottle do
     cellar :any
-    sha256 "f17582f4983460221308bb459b8b7ffa8df9fc8609707a1915a83905f72b51b2" => :el_capitan
-    sha256 "9474f102ea232b7aa7a49d43cde4401f6ab5ce92506a947ebcf7498273a4a81f" => :yosemite
-    sha256 "b2b106e9ebab3ae27b0b9626aa5063c699fcc2ddc2fdaee1d844989bb31a42f5" => :mavericks
+    sha256 "8fb168b590224eac35af6095d72d61244b0ba6054f1c1cbd607998d70dae2b11" => :el_capitan
+    sha256 "a43bbe94a10d35acf4e170d090af804e4249682b9c9b21df78620220cf28bcd7" => :yosemite
+    sha256 "34747194136d5c68f08d50e296b09ab5c78b971c09b2dd3e28e219c49e969016" => :mavericks
   end
 
   head do

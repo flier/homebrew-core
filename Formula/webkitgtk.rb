@@ -1,7 +1,7 @@
 class Webkitgtk < Formula
   desc "Full-featured Gtk+ port of the WebKit rendering engine"
-  homepage "http://webkitgtk.org"
-  url "http://webkitgtk.org/releases/webkitgtk-2.10.9.tar.xz"
+  homepage "https://webkitgtk.org/"
+  url "https://webkitgtk.org/releases/webkitgtk-2.10.9.tar.xz"
   sha256 "bbb18d741780b1b7fa284beb9a97361ac57cda2e42bad2ae2fcdbf797919e969"
   revision 1
 
@@ -72,8 +72,7 @@ class Webkitgtk < Formula
     libsoup = Formula["libsoup"]
     pango = Formula["pango"]
     pixman = Formula["pixman"]
-    flags = (ENV.cflags || "").split + (ENV.cppflags || "").split + (ENV.ldflags || "").split
-    flags += %W[
+    flags = %W[
       -I#{atk.opt_include}/atk-1.0
       -I#{cairo.opt_include}/cairo
       -I#{fontconfig.opt_include}

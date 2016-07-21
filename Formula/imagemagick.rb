@@ -4,16 +4,16 @@ class Imagemagick < Formula
   # Please always keep the Homebrew mirror as the primary URL as the
   # ImageMagick site removes tarballs regularly which means we get issues
   # unnecessarily and older versions of the formula are broken.
-  url "https://dl.bintray.com/homebrew/mirror/imagemagick-6.9.5-0.tar.xz"
-  mirror "https://www.imagemagick.org/download/ImageMagick-6.9.5-0.tar.xz"
-  sha256 "7830ce045bde3283b7479cf6b039a0956253f058e1a47da7fbe1003d6dad30b4"
+  url "https://dl.bintray.com/homebrew/mirror/imagemagick-6.9.5-2.tar.xz"
+  mirror "https://www.imagemagick.org/download/ImageMagick-6.9.5-2.tar.xz"
+  sha256 "f29e7991fe3d6ce819d99fc35926248f2f109fc826b4e26f3ced5b19f2cd0326"
 
   head "http://git.imagemagick.org/repos/ImageMagick.git"
 
   bottle do
-    sha256 "498f7f52c502f9159c9144307daa38ca8f04a3e17c337bdc1fdf2b94942a1a90" => :el_capitan
-    sha256 "ba59c4b2451238d8c18061c336c81677670f62411814e895df1726159de585a3" => :yosemite
-    sha256 "109447da87006ad229dc0c45a5b43317e68aaa7f1ce09d260eb58434a08e5816" => :mavericks
+    sha256 "12f5e2ba4a13f5d63563e87b0c23a81c4948798cd2a0d949c2f5cb7d497b6728" => :el_capitan
+    sha256 "a6c7e0cc373c86933b2e01e049829f4bb4e4ea7179d808db3baff17c207f626b" => :yosemite
+    sha256 "1b07c1583710dbd5b7fdbb74bb0a3f7d8849b3283c1bdb32787f6a7178c579a2" => :mavericks
   end
 
   deprecated_option "enable-hdri" => "with-hdri"
@@ -28,6 +28,8 @@ class Imagemagick < Formula
   option "with-quantum-depth-32", "Compile with a quantum depth of 32 bit"
   option "without-opencl", "Disable OpenCL"
   option "without-magick-plus-plus", "disable build/install of Magick++"
+  option "without-modules", "Disable support for dynamically loadable modules"
+  option "without-threads", "Disable threads support"
 
   depends_on "xz"
   depends_on "libtool" => :run
@@ -64,9 +66,14 @@ class Imagemagick < Formula
       --disable-dependency-tracking
       --disable-silent-rules
       --enable-shared
-      --disable-static
-      --with-modules
+      --enable-static
     ]
+
+    if build.without? "modules"
+      args << "--without-modules"
+    else
+      args << "--with-modules"
+    end
 
     if build.with? "openmp"
       args << "--enable-openmp"
@@ -81,6 +88,7 @@ class Imagemagick < Formula
     args << "--enable-hdri=yes" if build.with? "hdri"
     args << "--enable-fftw=yes" if build.with? "fftw"
     args << "--without-pango" if build.without? "pango"
+    args << "--without-threads" if build.without? "threads"
 
     if build.with? "quantum-depth-32"
       quantum_depth = 32

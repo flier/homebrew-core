@@ -1,25 +1,15 @@
 class Mvtools < Formula
   desc "Filters for motion estimation and compensation"
   homepage "https://github.com/dubhater/vapoursynth-mvtools"
+  url "https://github.com/dubhater/vapoursynth-mvtools/archive/v16.tar.gz"
+  sha256 "22232d5684bf144408ed0e463e2475a90d7ea9e9c7f3c13b92f60452037b07b3"
   head "https://github.com/dubhater/vapoursynth-mvtools.git"
-
-  stable do
-    url "https://github.com/dubhater/vapoursynth-mvtools/archive/v14.tar.gz"
-    sha256 "ecffe1a413a9e0c11af542ff70e7c0ad78ba6e3973d360b27b14f0aac13b5fa1"
-
-    # commit subject: "Depan: fix compilation with clang/libc++"
-    # upstream fix for dubhater/vapoursynth-mvtools#27
-    patch do
-      url "https://github.com/dubhater/vapoursynth-mvtools/commit/28abae24.patch"
-      sha256 "0338f6ff94f0bc8f77195e5b08fb8f080c6068e61f2493d600bbd2019afe7a62"
-    end
-  end
 
   bottle do
     cellar :any
-    sha256 "0f25725affeb1ded389954c2a83f53ee18d6f3259578ec42a8822e25ae439fad" => :el_capitan
-    sha256 "e2940a96c64ff3fac2be67ea1a30d669e6a12ba5a9dfd0f90efa59e22afda9dc" => :yosemite
-    sha256 "ad22aec093ace4cfdaa2e8fb8febf6748ea8878cd045f94ec205e74f2f269252" => :mavericks
+    sha256 "13244f8b967e3369301f3e67cd63d9b2a489ce3dcf5d7e891f7e3ce181b35fe5" => :el_capitan
+    sha256 "328dad095637c33a3cc63b95760e41c13ae38b079a749cbea5a42cf40764b9b2" => :yosemite
+    sha256 "9552959cda17e51bc207ba8cdeb7b6b7e25e628c9ecc085bc092e2ea83f70ca3" => :mavericks
   end
 
   depends_on "pkg-config" => :build
