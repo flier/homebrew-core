@@ -7,13 +7,16 @@ class Coreclr < Formula
   #sha256 "b49ba545fe632dfd5426669ca3300009a5ffd1ccf3c1cf82303dcf44044db33d"
 
   depends_on "icu4c"
+  depends_on "openssl"
   depends_on "cmake" => :build
   depends_on :python => :build if MacOS.version <= :snow_leopard
 
   def install
-    system "./build.sh", "x64", "release", "skiptests", "verbose"
+    ENV["LD_LIBRARY_PATH"] = Formula["openssl"].opt_lib
 
-    libexec.install "bin/obj/OSX.x64.Release"
+    system "./build.sh", "x64", "release", "verbose", "skiptests"
+
+    libexec.install "bin/Product/OSX.x64.Release"
     bin.install_symlink :path => "#{libexec}/bin"
     include.install_symlink :path => "#{libexec}/inc"
     lib.install_symlink :path => "#{libexec}/lib"
