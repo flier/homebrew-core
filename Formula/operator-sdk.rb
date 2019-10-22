@@ -2,17 +2,14 @@ class OperatorSdk < Formula
   desc "SDK for building Kubernetes applications"
   homepage "https://coreos.com/operators/"
   url "https://github.com/operator-framework/operator-sdk.git",
-      :tag      => "v0.10.0",
-      :revision => "ff80b17737a6a0aade663e4827e8af3ab5a21170"
-  revision 1
+      :tag      => "v0.11.0",
+      :revision => "39c65c36159a9c249e5f3c178205cc6e86c16f8d"
   head "https://github.com/operator-framework/operator-sdk.git"
 
   bottle do
-    rebuild 1
-    sha256 "e2c3a4caef99d2ca79f1472ce461eec0cc6007e6123b6a66ccab92fa56f9d173" => :catalina
-    sha256 "367dd7a981cb77114e40b25bfb413c862b9931cf90bf5cbccdad60cc32165eae" => :mojave
-    sha256 "91a932437b54fbc5e8730a84a21c2cc865e6ad81c23cd25f5b3a592aaf1a1976" => :high_sierra
-    sha256 "60b8a7947caf489ce3429d87991905fc781b67fa5b552bd8b662abefdbe2bde4" => :sierra
+    sha256 "84f1dbe77b4fc35cc5474ea0aaca40dc8f9c10af07f657a9c8c2bff92baeea4d" => :catalina
+    sha256 "4e99bf16da0a665919f18229c7f9d2e07c65ca769824b4c1485d7e4783714400" => :mojave
+    sha256 "62c8379c0454ff218f36e69c89469f9f0f5da9fac6cc3c1260980c201d2bc7d6" => :high_sierra
   end
 
   depends_on "go"
@@ -50,7 +47,7 @@ class OperatorSdk < Formula
 
     if build.stable?
       version_output = shell_output("#{bin}/operator-sdk version")
-      assert_match "version: v#{version}", version_output
+      assert_match "version: \"v#{version}\"", version_output
       assert_match stable.specs[:revision], version_output
     end
 

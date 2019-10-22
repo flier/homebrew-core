@@ -6,6 +6,7 @@ class MysqlAT55 < Formula
 
   bottle do
     rebuild 2
+    sha256 "9769598f3cd623c3b6a0c63f42e31c19c1ff843fd94d056aacc8478563b2ae85" => :catalina
     sha256 "1b4f8a3d3faa62bebccfa7b0bc19cf33eb5aae8b32af06acbd2ac20aa715d32f" => :mojave
     sha256 "cb28f6a3ef4d6eb84b5e6825a6764b383400e0061eca694d77336d1952333e68" => :high_sierra
     sha256 "46331ab927515e6897c67c1219f4e00a3b61b15c4adbc21898fe23dea2c51cfc" => :sierra
@@ -132,23 +133,21 @@ class MysqlAT55 < Formula
   end
 
   test do
-    begin
-      # Expects datadir to be a completely clean dir, which testpath isn't.
-      dir = Dir.mktmpdir
-      system bin/"mysql_install_db", "--user=#{ENV["USER"]}",
-      "--basedir=#{prefix}", "--datadir=#{dir}", "--tmpdir=#{dir}"
+    # Expects datadir to be a completely clean dir, which testpath isn't.
+    dir = Dir.mktmpdir
+    system bin/"mysql_install_db", "--user=#{ENV["USER"]}",
+    "--basedir=#{prefix}", "--datadir=#{dir}", "--tmpdir=#{dir}"
 
-      pid = fork do
-        exec bin/"mysqld", "--datadir=#{dir}"
-      end
-      sleep 2
-
-      output = shell_output("curl 127.0.0.1:3306")
-      output.force_encoding("ASCII-8BIT") if output.respond_to?(:force_encoding)
-      assert_match version.to_s, output
-    ensure
-      Process.kill(9, pid)
-      Process.wait(pid)
+    pid = fork do
+      exec bin/"mysqld", "--datadir=#{dir}"
     end
+    sleep 2
+
+    output = shell_output("curl 127.0.0.1:3306")
+    output.force_encoding("ASCII-8BIT") if output.respond_to?(:force_encoding)
+    assert_match version.to_s, output
+  ensure
+    Process.kill(9, pid)
+    Process.wait(pid)
   end
 end

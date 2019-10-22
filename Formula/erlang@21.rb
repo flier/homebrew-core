@@ -2,15 +2,14 @@ class ErlangAT21 < Formula
   desc "Programming language for highly scalable real-time systems"
   homepage "https://www.erlang.org/"
   # Download tarball from GitHub; it is served faster than the official tarball.
-  url "https://github.com/erlang/otp/archive/OTP-21.3.8.6.tar.gz"
-  sha256 "7d96d11143b8ad71448acc0427c2c34756712aa2972d9aaa6d100f87f29918c6"
-  revision 1
+  url "https://github.com/erlang/otp/archive/OTP-21.3.8.8.tar.gz"
+  sha256 "d7db443bc27a782e15270c5e43fe57426d835764459fed7c1373879e56f9c3da"
 
   bottle do
     cellar :any
-    sha256 "f732d5fd9fa777892f830de91b82506b07848fdc4a08d37016dd4f54d8e910be" => :mojave
-    sha256 "1eae10e8e2701f7da2c933c2b136cf6e5f9564007a41364574835cc5c7f65043" => :high_sierra
-    sha256 "9f27267e896b026e32eec00e97a70c09ec057746ad8d8ae1f3d05553eb9fea55" => :sierra
+    sha256 "883bcf55c79997ab161f2aa7ff03b6d9ea9a3bb61f743dc3b5b93a2aab7f8ad7" => :catalina
+    sha256 "fdd478b2ce036fdc0c727abdeb17af287dc814608f1f335cf0a6b209079fe907" => :mojave
+    sha256 "9fe041fff48bdab01276ed5009848d003d8aad5730453ea8be219c14405d3d26" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -34,6 +33,10 @@ class ErlangAT21 < Formula
   end
 
   def install
+    # Work around Xcode 11 clang bug
+    # https://bitbucket.org/multicoreware/x265/issues/514/wrong-code-generated-on-macos-1015
+    ENV.append_to_cflags "-fno-stack-check" if DevelopmentTools.clang_build_version >= 1010
+
     # Unset these so that building wx, kernel, compiler and
     # other modules doesn't fail with an unintelligable error.
     %w[LIBS FLAGS AFLAGS ZFLAGS].each { |k| ENV.delete("ERL_#{k}") }

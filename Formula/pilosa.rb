@@ -6,6 +6,7 @@ class Pilosa < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "1480f6130114fb66f695ea0c0a64b1f882339d057b6e40c6c50f996249a5190f" => :catalina
     sha256 "b07bcd3693cdc789a45fdce1b3257b3ca85b018eb65f1cbb45234d41ff935902" => :mojave
     sha256 "245160b3bc6e7e6a4b27d3081580c0616e8004ea1b9420367801c2193417caea" => :high_sierra
     sha256 "6b9489e424aca469bafc5e7c7ec20470009c713ce1a843efc7ee6b884fb216da" => :sierra
@@ -52,15 +53,13 @@ class Pilosa < Formula
   end
 
   test do
-    begin
-      server = fork do
-        exec "#{bin}/pilosa", "server"
-      end
-      sleep 0.5
-      assert_match("Welcome. Pilosa is running.", shell_output("curl localhost:10101"))
-    ensure
-      Process.kill "TERM", server
-      Process.wait server
+    server = fork do
+      exec "#{bin}/pilosa", "server"
     end
+    sleep 0.5
+    assert_match("Welcome. Pilosa is running.", shell_output("curl localhost:10101"))
+  ensure
+    Process.kill "TERM", server
+    Process.wait server
   end
 end
