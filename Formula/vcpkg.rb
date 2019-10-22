@@ -2,13 +2,6 @@ class Vcpkg < Formula
   desc "C++ Library Manager for Windows, Linux, and MacOS"
   homepage "https://docs.microsoft.com/en-us/cpp/vcpkg"
 
-  stable do
-    url "https://github.com/microsoft/vcpkg/archive/2019.09.tar.gz"
-    sha256 "16c1b151cc3cf2022b03b699970e548f48cd9cd1e68db0b9c23a1d0d39391e56"
-  end
-
-  head do
-    url "https://github.com/microsoft/vcpkg.git"
   url "https://github.com/microsoft/vcpkg/archive/2019.09.tar.gz"
   sha256 "16c1b151cc3cf2022b03b699970e548f48cd9cd1e68db0b9c23a1d0d39391e56"
   head "https://github.com/microsoft/vcpkg.git"
@@ -27,5 +20,6 @@ class Vcpkg < Formula
 
   test do
     assert_match version.to_s, pipe_output("#{bin}/vcpkg version")
+    assert_match "zlib", pipe_output("#{bin}/vcpkg search zlib")
   end
 end
