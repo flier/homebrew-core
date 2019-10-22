@@ -9,7 +9,9 @@ class Vcpkg < Formula
 
   head do
     url "https://github.com/microsoft/vcpkg.git"
-  end
+  url "https://github.com/microsoft/vcpkg/archive/2019.09.tar.gz"
+  sha256 "16c1b151cc3cf2022b03b699970e548f48cd9cd1e68db0b9c23a1d0d39391e56"
+  head "https://github.com/microsoft/vcpkg.git"
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
