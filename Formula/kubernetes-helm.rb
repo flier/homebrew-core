@@ -2,15 +2,15 @@ class KubernetesHelm < Formula
   desc "The Kubernetes package manager"
   homepage "https://helm.sh/"
   url "https://github.com/helm/helm.git",
-      :tag      => "v2.15.0",
-      :revision => "c2440264ca6c078a06e088a838b0476d2fc14750"
+      :tag      => "v2.15.2",
+      :revision => "8dce272473e5f2a7bf58ce79bb5c3691db54c96b"
   head "https://github.com/helm/helm.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "a9efaff1de808ecdd719b152513dda7f6911c552128e57e6c2c585a9e33c95d1" => :catalina
-    sha256 "d674413c6a1738f0d5b128d2fec69a4590dab4c1f1293acd1340b275cad6511c" => :mojave
-    sha256 "eea54c51dbaeed34fc4cd89fe4d1e22dd80b2eee1223f9406fa92fef72cda703" => :high_sierra
+    sha256 "936460c654783d9088ca25bece4a08c7161d85843b20eb120d865d647f95657f" => :catalina
+    sha256 "af96fbedc19ad56994180843cda30829ce14c83b556531b8089b9c5783531fe2" => :mojave
+    sha256 "37fd0e8f9a68c62ce0dcc1422ce30d2e0490a36f48f6480aa060fd6e469b1337" => :high_sierra
   end
 
   depends_on "glide" => :build

@@ -1,4 +1,4 @@
-class Presto < Formula
+class Prestodb < Formula
   desc "Distributed SQL query engine for big data"
   homepage "https://prestodb.io"
   url "https://search.maven.org/remotecontent?filepath=com/facebook/presto/presto-server/0.227/presto-server-0.227.tar.gz"
@@ -7,6 +7,8 @@ class Presto < Formula
   bottle :unneeded
 
   depends_on :java => "1.8+"
+
+  conflicts_with "prestosql", :because => "both install `presto` and `presto-server` binaries"
 
   resource "presto-cli" do
     url "https://search.maven.org/remotecontent?filepath=com/facebook/presto/presto-cli/0.227/presto-cli-0.227-executable.jar"
