@@ -8,9 +8,16 @@ class Vcpkg < Formula
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
-  
+  depends_on "gcc" if MacOS.version <= :mojave
+
   def install
-    system "./bootstrap-vcpkg.sh", "-useSystemBinaries", "-allowAppleClang"
+    if MacOS.version <= :mojave
+      ENV["CC"] = Formula["gcc"].opt_bin/"gcc-#{Formula["gcc"].version_suffix}"
+      ENV["CXX"] = Formula["gcc"].opt_bin/"g++-#{Formula["gcc"].version_suffix}"
+    end
+    args = %w[-useSystemBinaries]
+    args += %w[-allowAppleClang] if MacOS.version > :mojave
+    system "./bootstrap-vcpkg.sh", *args
     libexec.install ["ports", "scripts", "triplets", "vcpkg", ".vcpkg-root"]
     bin.install_symlink libexec/"vcpkg"
   end
